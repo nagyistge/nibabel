@@ -338,7 +338,6 @@ class MGHHeader(object):
         dtype = self.get_data_dtype()
         shape = self.get_data_shape()
         offset = self.get_data_offset()
-        print shape, dtype, fileobj, offset
         return array_from_file(shape, dtype, fileobj, offset)
     
     def _empty_headerdata(self):
@@ -388,7 +387,6 @@ class MGHHeader(object):
         '''
         hdr_nofooter = np.ndarray((), dtype=self._hdrdtype,
                                   buffer=self.binaryblock)
-        print hdr_nofooter
         # goto the very beginning of the file-like obj
         fileobj.seek(0)
         fileobj.write(hdr_nofooter.tostring())
@@ -410,8 +408,6 @@ class MGHHeader(object):
         ftr_loc_in_hdr = len(self.binaryblock) - self._ftrdtype.itemsize
         ftr_nd = np.ndarray((), dtype = self._ftrdtype,
                             buffer=self.binaryblock, offset=ftr_loc_in_hdr)
-        print ftr_loc_in_hdr
-        print ftr_nd
         fileobj.seek(self.get_footer_offset())
         fileobj.write(ftr_nd.tostring())
 
